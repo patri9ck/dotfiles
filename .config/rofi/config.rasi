@@ -1,0 +1,11 @@
+configuration {
+  display-window: "";
+  display-drun: "";
+  font: "Cantarell 12";
+  modi: "window,drun";
+  drun-display-format: "{name}";
+  window-format: "{t}"; 
+  show-icons: true; 
+}
+
+@theme "theme"

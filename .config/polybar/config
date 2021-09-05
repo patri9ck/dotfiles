@@ -1,0 +1,134 @@
+[bar/main]
+offset-y = 20
+offset-x = 20
+font-0 = Cantarell:size=11;2
+font-1 = Symbola:size=11;2
+font-2 = MaterialIcons:size=11;3
+width = 1880
+foreground = #ffffff
+background = #272a34
+padding = 5
+separator = "   "
+modules-center = player-note player-status player-previous player-play-pause player-next
+modules-right = webcam microphone audio date network bluetooth
+
+[bar/desktop]
+inherit = bar/main
+modules-left = notifications updates workspaces system
+
+[bar/notebook]
+inherit = bar/main
+modules-left = notifications updates workspaces brightness battery system
+
+[module/notifications]
+type = custom/script
+exec = [ "$(dunstctl is-paused)" = "false" ] && echo  || echo 
+click-left = dunstctl set-paused toggle
+interval = 1
+
+[module/network]
+type = custom/script
+exec = $HOME/.scripts/network status && ($HOME/.scripts/network vpn && echo  || echo ) || echo 
+click-right = pkill -x nm-connection-e || $HOME/.scripts/floating-window nm-connection-editor
+click-left = $HOME/.scripts/network status && nmcli radio wifi off || nmcli radio wifi on
+
+[module/bluetooth]
+type = custom/script
+exec = bluetoothctl show | grep -q "Powered: yes" && echo   || echo 
+click-right = pkill -x blueman-manager || $HOME/.scripts/floating-window blueman-manager
+click-left = bluetoothctl show | grep -q "Powered: yes" && bluetoothctl power off || bluetoothctl power on
+interval = 1
+
+[module/brightness]
+type = internal/backlight
+card = ${env:GRAPHICS_CARD}
+enable-scroll = true
+format =  <label>
+
+[module/battery]
+type = internal/battery
+battery = ${env:BATTERY}
+adapter = ${env:BATTERY_ADAPTER}
+format-charging =  <label-charging>
+format-discharging =  <label-discharging>
+
+[module/date]
+type = internal/date
+date = %d.%m
+time = %H:%M
+label = %date% %time%
+
+[module/webcam]
+type = custom/script
+exec = $HOME/.scripts/webcam status && echo  || echo 
+click-left = $HOME/.scripts/webcam toggle
+interval = 1
+
+[module/microphone]
+type = custom/script
+exec = [ "$(pamixer --default-source --get-mute)" = "false" ] && echo  || echo 
+click-left = pamixer --default-source -t
+interval = 1
+
+[module/audio]
+type = internal/pulseaudio
+click-right = pgrep -x pavucontrol && pkill -x pavucontrol || $HOME/.scripts/floating-window pavucontrol
+label-muted =  
+format-volume =  <bar-volume>
+bar-volume-width = 5
+bar-volume-empty = ━
+bar-volume-fill = ━
+bar-volume-indicator = ⏺
+
+[module/workspaces]
+type = internal/bspwm
+enable-click = true
+enable-scroll = true
+label-occupied = " ○"
+label-empty = " ○"
+label-urgent = " ○"
+label-focused = " ⏺"
+
+[module/updates]
+type = custom/script
+exec = packages_count=$(yay -Q | wc -l) && echo $(($packages_count - $($HOME/.scripts/updates count)))/$packages_count
+interval = 300
+click-right = $HOME/.scripts/updates update
+
+[module/player-note]
+type = custom/text
+content =  
+
+[module/player-status]
+type = custom/script
+exec = music=$($HOME/.scripts/player music) && echo $music || echo No Music
+interval = 1
+click-right = $HOME/.scripts/player show
+
+[module/player-previous]
+type = custom/text
+content = 
+click-left = playerctl -p $PLAYER previous
+
+[module/player-play-pause]
+type = custom/script
+exec = [ "$(playerctl -s -p "$PLAYER" status)" = "Playing" ] && echo  || echo 
+interval = 1
+click-left = playerctl -p $PLAYER play-pause
+
+[module/player-next]
+type = custom/text
+content = 
+click-left = playerctl -p $PLAYER next
+
+[module/system]
+type = custom/menu
+menu-0-0 = 
+menu-0-0-exec = poweroff
+menu-0-1 = 
+menu-0-1-exec = reboot
+menu-0-2 = 
+menu-0-2-exec = bspc quit
+label-separator = ${bar/main.separator}
+label-open = 
+label-close = 

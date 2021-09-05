@@ -1,0 +1,29 @@
+[global]
+    alignment = left
+    font = Cantarell 11
+    padding = 10
+    horizontal_padding = 10
+    geometry = "0x5-50+50"
+    separator_height = 0
+    icon_position = left
+    min_icon_size = 30
+    max_icon_size = 30
+    stack_duplicates = false
+    show_indicators = false
+    markup = full
+    format = "%s\n%b"
+
+[urgency_low]
+    background = "#272a34"
+    foreground = "#ffffff"
+    timeout = 5
+
+[urgency_normal]
+    background = "#272a34"
+    foreground = "#ffffff"
+    timeout = 10
+
+[urgency_critical]
+    background = "#272a34"
+    foreground = "#ffffff"
+    timeout = 15

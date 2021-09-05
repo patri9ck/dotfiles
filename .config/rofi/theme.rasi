@@ -1,0 +1,41 @@
+* {
+  selected-text-color: #ffffff;
+  unselected-text-color: #626469;
+
+  background-color: #272a34;
+}
+
+entry {
+  padding: 5;
+  text-color: @selected-text-color;
+}
+
+listview {
+  lines: 5;
+}
+
+textbox {
+  padding: 10;
+  text-color: @selected-text-color;
+}
+
+element selected, element-icon selected, element-text selected {
+  background-color: #06a284;
+}
+
+element-icon, element-text {
+  padding: 5;
+}
+
+element-icon {
+  size: 20;
+}
+
+element-text {
+  text-color: @unselected-text-color;
+  highlight: none;
+}
+
+element-text selected {
+  text-color: @selected-text-color;
+}

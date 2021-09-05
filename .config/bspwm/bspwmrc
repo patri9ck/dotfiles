@@ -1,0 +1,31 @@
+#!/bin/sh
+
+hostname=$(hostname)
+	
+if [ "$hostname" = "notebook" ]
+then
+	batsignal -b -w 20 -c 10 -d 5
+fi
+
+$HOME/.scripts/updates notifications &
+
+polybar $hostname &
+sxhkd &
+dunst &
+picom -b
+blueman-applet &
+rclone mount "Google Drive:" "$HOME/Google Drive" &
+thunar --daemon &
+nm-applet &
+a2ln $PHONE_NOTIFICATIONS_PORT
+
+xwallpaper --stretch $HOME/.background.jpg
+
+xsetroot -cursor_name left_ptr
+
+wmname LG3D
+
+bspc monitor -d 1 2 3 4 5
+
+bspc config window_gap 20
+bspc config border_width 0

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+if [ "$1" = "music" ]
+then
+	if ! pgrep -x $PLAYER_EXECUTABLE >/dev/null
+	then
+		exit 1
+	fi
+	
+	title=$(playerctl -s -p $PLAYER metadata title)
+	artist=$(playerctl -s -p $PLAYER metadata artist)
+	
+	if [ -z "$title" ]
+	then
+		exit 1
+	fi
+		
+	if [ ${#title} -gt $PLAYER_MAXIMUM_TITLE_LENGTH ]
+	then
+		title=$(echo $title | cut -c1-$PLAYER_MAXIMUM_TITLE_LENGTH)...
+	fi
+
+	if [ -z "$artist" ]
+	then
+		echo $title
+	else
+		echo $artist - $title
+	fi
+elif [ "$1" = "show" ]
+then
+	if pgrep -x $PLAYER_EXECUTABLE
+	then
+		xdo activate -n $PLAYER_CLASS
+	else
+		$PLAYER_EXECUTABLE
+	fi
+else
+	exit 1
+fi

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+get_updates_count() {
+	(yay -Qum && checkupdates) 2>/dev/null | wc -l
+}
+
+if [ "$1" = "count" ]
+then
+	get_updates_count
+elif [ "$1" = "update" ]
+then
+	if [ $(get_updates_count) -eq 0 ]
+	then	
+		exit 1
+	fi
+	
+	$HOME/.scripts/floating-window kitty yay &
+elif [ "$1" = "notifications" ]
+then
+	while true
+	do
+		sleep $UPDATES_NOTIFICATION_INTERVAL
+
+		updates_count=$(get_updates_count)
+
+		if [ $updates_count -ge $UPDATES_NOTIFICATION_COUNT ]
+		then
+			if [ $updates_count -eq 1 ]
+			then
+				notify-send "There is one update available."
+			else
+				notify-send "There are $updates_count updates available."
+			fi
+		fi
+	done
+else
+	exit 1
+fi

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+local_file_name=$(date +"%d.%m.%Y %H:%M:%S").png
+remote_file_name=$(openssl rand -base64 5 | head -c 5).png
+
+local_file=$SCREENSHOT_LOCAL_DIRECTORY/$local_file_name
+remote_file=$SCREENSHOT_REMOTE_DIRECTORY/$remote_file_name
+
+upload() {
+	if scp -P $SCREENSHOT_PORT -o ConnectTimeout=5 "$local_file" "$SCREENSHOT_USER@$SCREENSHOT_HOST:$remote_file"
+	then
+		body="Saved at $local_file and uploaded to $SCREENSHOT_HOST."
+
+		printf "$SCREENSHOT_URL" "$remote_file_name" | xclip -selection clipboard
+	else
+		body="Saved at $local_file."
+
+		xclip -selection clipboard -t image/png -i "$local_file"
+	fi
+
+	notify-send "Screenshot taken!" "$body"
+}
+
+if [ "$1" = "fullscreen" ]
+then
+	maim "$local_file"
+
+	upload
+elif [ "$1" = "selection" ]
+then
+	if ! maim -s "$local_file"
+	then
+		exit 1
+	else
+		upload
+	fi
+else
+	exit 1
+fi

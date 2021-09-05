@@ -1,0 +1,76 @@
+# Start terminal
+super + Return
+	kitty
+
+# Show launcher or window switcher
+super + {_,shift} + l
+	rofi -show {drun,window}
+
+# Log out
+super + Escape
+	bspc quit
+
+# Close window
+super + {_,shift} + q
+	bspc node -{c,k}
+
+# Switch window state
+super + s
+	bspc node -t {\~tiled,\~floating,\~fullscreen}
+
+# Move window
+super + {Left,Right}
+	bspc node -d {prev,next} --follow
+
+# Switch workspace using numbers
+super + {1-9}
+	bspc desktop -f {1-9}
+
+# Switch workspace using mouse wheel
+super + {button4,button5}
+	bspc desktop -f {prev,next}
+
+# Toggle microphone
+super + m
+	pamixer --default-source -t && \
+        [ "$(pamixer --default-source --get-mute)" = "false" ] && \
+     	notify-send "Microphone unmuted." || \
+        notify-send "Microphone muted."
+
+# Toggle webcam
+super + w
+	$HOME/.scripts/webcam toggle && \
+	$HOME/.scripts/webcam status && \
+	notify-send "Webcam enabled." || \
+	notify-send "Webcam disabled."
+
+# Open player
+XF86Tools
+	$HOME/.scripts/player show
+
+# Manage player
+XF86Audio{Stop,Prev,Next,Play}
+	playerctl -p $PLAYER {pause,previous,next,play}
+
+# Lower/Raise audio volume
+XF86Audio{Lower,Raise}Volume
+	pamixer {-d,-i} 1
+
+# Mute audio
+XF86AudioMute
+	pamixer -t && \
+	[ "$(pamixer --get-mute)" = "false" ] && \
+	notify-send "Audio unmuted." || \
+	notify-send "Audio muted."
+
+# Take screenshot
+Print + {_,shift}
+	$HOME/.scripts/screenshot {fullscreen,selection}
+
+# Close all notifications
+super + c
+	dunstctl close-all
+
+# Moves the focused window to the emptiest desktop
+super + e
+	$HOME/.scripts/find-emptiest-desktop

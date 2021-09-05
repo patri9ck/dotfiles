@@ -1,0 +1,38 @@
+#!/bin/sh
+
+get_nodes_count() {
+	bspc query -N -d $1 -n .window.\!hidden | wc -l
+}
+
+focused_node=$(bspc query -N -n)
+
+if [ -z "$focused_node" ]
+then
+	exit 1
+fi
+
+for current_desktop in $(bspc query -D)
+do
+	if [ -z "$nodes_count" ]
+	then
+		nodes_count=$(get_nodes_count $current_desktop)
+
+		desktop=$current_desktop
+	else
+		current_nodes_count=$(get_nodes_count $current_desktop)
+
+		if [ $current_nodes_count -lt $nodes_count ]
+		then
+			nodes_count=$current_nodes_count
+
+			desktop=$current_desktop
+		fi
+	fi
+done
+
+if [ $nodes_count -ge $(($(get_nodes_count focused) - 1)) ]
+then
+	exit 1
+fi
+	
+bspc node -d $desktop --follow

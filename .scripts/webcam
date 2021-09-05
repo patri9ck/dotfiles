@@ -1,0 +1,44 @@
+#!/bin/sh
+
+devices_directory=/sys/bus/usb/devices
+
+drivers_directory=/sys/bus/usb/drivers/usb
+
+get_device() {
+	for device in $(ls $devices_directory)
+	do
+		product=$devices_directory/$device/product
+				
+		if [ -f "$product" ] && [ "$(cat $product)" = "$WEBCAM" ]
+		then
+			echo "$device"
+
+			break
+		fi
+	done	
+}
+
+if [ "$1" = "status" ]
+then
+	device=$(get_device)
+	
+	if [ -z "$device" ] || [ ! -d "$drivers_directory/$device" ]
+	then
+		exit 1
+	fi
+elif [ "$1" = "toggle" ]
+then
+	device=$(get_device)
+
+	if [ -z "$device" ]
+	then
+		exit 1
+	fi
+	
+	if [ -d "$drivers_directory/$device" ]
+	then
+		echo $device | sudo tee $drivers_directory/unbind
+	else
+		echo $device | sudo tee $drivers_directory/bind
+	fi	
+fi

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+bspc rule -a \* -o state=floating center=true rectangle=${FLOATING_WINDOW_WIDTH}x$FLOATING_WINDOW_HEIGHT+0+0
+
+$*
