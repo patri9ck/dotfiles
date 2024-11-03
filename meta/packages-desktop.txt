@@ -1,2 +1,4 @@
-steam
+openrazer-daemon
+polychromatic
 ruby
+steam

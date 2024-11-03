@@ -3,8 +3,6 @@
 main_directory="$(dirname "$(dirname "$(readlink -f "$0")")")"
 
 packages() {
-	sudo pacman -S --needed base-devel git
-
 	git clone https://aur.archlinux.org/paru-bin.git
 	
 	cd paru-bin
@@ -24,14 +22,14 @@ dotfiles() {
 
 	for file in $(find "$main_directory" -type f)
 	do
-		directory="$(dirname "$(echo $file | cut -c$(($(echo -n "$main_directory" | wc -m) + 2))-)")"
+		directory="$(dirname "$(printf $file | cut -c$(($(printf "$main_directory" | wc -m) + 2))-)")"
 
-		if echo "$ignored_directories" | grep -qx "$(echo -n "$directory" | cut -d / -f 1)"
+		if printf "$ignored_directories" | grep -qx "$(printf "$directory" | cut -d / -f 1)"
 		then
 			continue
 		fi
 
-		if [ "$directory" = "." ] && echo "$ignored_files" | grep -qx "$(basename "$file")"
+		if [ "$directory" = "." ] && printf "$ignored_files" | grep -qx "$(basename "$file")"
 		then
 			continue
 		fi
@@ -44,11 +42,6 @@ dotfiles() {
 
 case "$1" in
 	packages)
-		if [ -z "$2" ]
-		then
-			exit 1
-		fi
-		
 		packages "$2"
 		;;
 	dotfiles)

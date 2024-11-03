@@ -8,14 +8,14 @@ adb shell am broadcast -a com.android.systemui.demo -e command notifications -e 
 adb shell am broadcast -a com.android.systemui.demo -e command battery -e plugged false -e level 100
 
 clean() {
-	adb shell am broadcast -a com.android.systemui.demo -e command exit
+    adb shell am broadcast -a com.android.systemui.demo -e command exit
 
-	exit
+    exit
 }
 
 trap clean INT
 
 while true
 do
-	sleep 1
+    sleep 1
 done

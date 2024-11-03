@@ -1,4 +1,4 @@
-# Dotfiles (Wayland)
+# Dotfiles
 This repository contains my dotfiles and a script to install them as well as all needed packages.
 
 Start by cloning this repository:
@@ -23,10 +23,12 @@ See [`packages.txt`](meta/packages.txt), [`packages-desktop.txt`](meta/packages-
 
 Do not forget to install packages for [graphic card drivers](https://wiki.archlinux.org/title/xorg#Driver_installation) and [video acceleration](https://wiki.archlinux.org/title/Hardware_video_acceleration#Installation).
 
+For `.desktop` files to be able to use the terminal, run:
+```
+# ln -s /usr/bin/kitty /usr/bin/xdg-terminal-exec
+```
 ## Installing Dotfiles
 Dotfiles can be installed by running:
 ```
 $ .dotfiles/meta/install.sh dotfiles
 ```
-
-This will create symbolic links from the cloned repository to your home directory.
