@@ -322,15 +322,12 @@
                 :reveal system-hovered
                 (box :space-evenly false
                     (button :class "bar-nested-button"
-                        :onclick `$HOME/.scripts/system 'hyprctl dispatch exit'`
+                        :onclick `hyprlock &`
                         :tooltip system-user
-                        "")
+                        "")
                     (button :class "bar-nested-button"
                         :onclick `$HOME/.scripts/system reboot`
-                        "")
-                    (button :class "bar-nested-button"
-                        :onclick `hyprlock &`
-                        ""))))))
+                        ""))))))
 
 
 (defwidget player []
