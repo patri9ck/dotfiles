@@ -3,16 +3,18 @@
     :stacking "bg"
     :geometry (geometry :width "100%"
         :anchor "top center")
-    (centerbox
-        :class "bar-window"
-        (box :space-evenly false
-            (time)
-            (battery)
-            (system)
-            (volume)
-            (brightness))
-        (player)
-        (workspaces)))
+    (revealer :transition "slidedown"
+        :reveal bar-opened
+        (centerbox
+            :class "bar-window"
+            (box :space-evenly false
+                (time)
+                (battery)
+                (system)
+                (volume)
+                (brightness))
+            (player)
+            (workspaces))))
 
 
 (defwindow time :monitor 0
@@ -44,6 +46,9 @@
 
 (defpoll hostname :interval "1s"
     `hostname`)
+
+
+(defvar bar-opened false)
 
 
 (defvar apps-opened false)
