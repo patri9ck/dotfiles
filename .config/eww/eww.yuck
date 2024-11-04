@@ -44,7 +44,7 @@
             (apps)))
 
 
-(defpoll hostname :interval "1s"
+(defpoll hostname :interval "9999s"
     `hostname`)
 
 
@@ -63,10 +63,10 @@
 
 
 (defvar system-hovered false)
-(defpoll system-user :interval "1s"
+(defpoll system-user :interval "9999s"
     :run-while system-hovered
     `whoami`)
-(defpoll system-uptime :interval "1s"
+(defpoll system-uptime :interval "60s"
     :run-while system-hovered
     `uptime -p | awk '{for(i=1;i<=NF;i++){ $i=toupper(substr($i,1,1)) substr($i,2) }}1'`)
 
@@ -131,9 +131,9 @@
 (defvar battery-hovered false)
 (defpoll battery-status :interval "1s"
     `[ "$($HOME/.scripts/battery status)" = charging ] && echo  || echo `)
-(defpoll battery-capacity :interval "1s"
+(defpoll battery-capacity :interval "60s"
     `$HOME/.scripts/battery capacity`)
-(defpoll battery-remaining :interval "1s"
+(defpoll battery-remaining :interval "60s"
     :run-while battery-hovered
     `$HOME/.scripts/battery remaining`)
 
