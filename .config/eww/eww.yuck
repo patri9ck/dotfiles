@@ -14,7 +14,10 @@
                 (volume)
                 (brightness))
             (player)
-            (workspaces))))
+            (box :halign "end"
+                :space-evenly false
+                (weather)
+                (workspaces)))))
 
 
 (defwindow time :monitor 0
@@ -131,9 +134,9 @@
 (defvar battery-hovered false)
 (defpoll battery-status :interval "1s"
     `[ "$($HOME/.scripts/battery status)" = charging ] && echo  || echo `)
-(defpoll battery-capacity :interval "1s"
+(defpoll battery-capacity :interval "60s"
     `$HOME/.scripts/battery capacity`)
-(defpoll battery-remaining :interval "1s"
+(defpoll battery-remaining :interval "60s"
     :run-while battery-hovered
     `$HOME/.scripts/battery remaining`)
 
@@ -143,7 +146,9 @@
 (deflisten workspaces-current :initial "1"
   `$HOME/.scripts/workspaces current`)
 
-(defvar workspaces "[]")
+
+(defpoll weather :interval "180s"
+    `curl -sf 'wttr.in/$CITY?format=%t'`)
 
 
 (defwidget time []
@@ -161,6 +166,13 @@
                 (button :class "bar-nested-button"
                     :onclick `eww open --toggle time`
                     "")))))
+
+
+(defwidget weather []
+    (box :class "bar-box"
+        :space-evenly false
+        (label :class "bar-nested-label"
+            :text weather)))
 
 
 (defwidget apps []
@@ -252,9 +264,9 @@
     (eventbox :onhover `eww update brightness-hovered=true`
         :onhoverlost `eww update brightness-hovered=false`
         :tooltip brightness
+        :visible "${hostname == "notebook"}"
         (box :class "bar-box"
             :space-evenly false
-            :visible "${hostname == "notebook"}"
             (label :class "bar-nested-label"
                 :text "")
             (revealer :transition "slideright"
@@ -293,10 +305,10 @@
 (defwidget battery []
     (eventbox :onhover `eww update battery-hovered=true`
         :onhoverlost `eww update battery-hovered=false`
+        :visible "${hostname == "notebook"}"
         (box :class "bar-box"
             :space-evenly false
             :tooltip battery-remaining
-            :visible "${hostname == "notebook"}"
             (label :class "bar-nested-label"
                 :text battery-status)
             (label :class "bar-nested-label"
@@ -304,8 +316,7 @@
 
 
 (defwidget workspaces []
-    (box :halign "end"
-        :class "bar-box"
+    (box :class "bar-box"
         :space-evenly false
         :tooltip workspaces-current
         (for workspace in workspaces-all
