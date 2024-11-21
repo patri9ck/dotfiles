@@ -12,11 +12,16 @@
                 (battery)
                 (system)
                 (volume)
-                (brightness))
+                (brightness)
+                (webcam)
+                (microphone))
             (player)
             (box :halign "end"
                 :space-evenly false
                 (weather)
+                (vpn) 
+                (bluetooth)
+                (wlan)
                 (workspaces)))))
 
 
@@ -30,32 +35,11 @@
             :year `date +%Y`)))
 
 
-(defwindow apps :monitor 0
-    :stacking "fg"
-    :focusable true
-    :geometry (geometry :anchor "center")
-    (box :class "apps-window"
-            :orientation "v"
-            :space-evenly false
-            :width 500
-            (box
-                (wlan)
-                (bluetooth)
-                (vpn)
-                (microphone)
-                (webcam))
-            (apps)))
-
-
 (defpoll hostname :interval "1s"
     `hostname`)
 
 
 (defvar bar-opened false)
-
-
-(defvar apps-opened false)
-(defvar apps "[]")
 
 
 (defvar player-music "")
@@ -84,7 +68,7 @@
 
 (defvar wlan-hovered false)
 (defpoll wlan-status :interval "1s"
-    :run-while apps-opened
+    :run-while bar-opened
     `[ "$($HOME/.scripts/wlan status)" = enabled ] && echo  || echo `)
 (defpoll wlan-network :interval "1s"
     :run-while wlan-hovered
@@ -93,13 +77,13 @@
 
 (defvar bluetooth-hovered false)
 (defpoll bluetooth-status :interval "1s"
-    :run-while apps-opened
+    :run-while bar-opened
     `[ "$($HOME/.scripts/bluetooth status)" = enabled ] && echo  || echo `)
 
 
 (defvar vpn-hovered false)
 (defpoll vpn-status :interval "1s"
-    :run-while apps-opened
+    :run-while bar-opened
     `[ "$($HOME/.scripts/vpn status)" = enabled ] && echo  || echo `)
 (defpoll vpn-endpoint :interval "1s"
     :run-while vpn-hovered
@@ -107,12 +91,12 @@
 
 
 (defpoll microphone-status :interval "1s"
-    :run-while apps-opened
+    :run-while bar-opened
     `[ "$(pamixer --default-source --get-mute)" = false ] && echo  || echo `)
 
 
 (defpoll webcam-status :interval "1s"
-    :run-while apps-opened
+    :run-while bar-opened
     `[ "$($HOME/.scripts/webcam status)" = enabled ] && echo  || echo `)
 
 
@@ -175,66 +159,37 @@
             :text weather)))
 
 
-(defwidget apps []
-    (box :orientation "v"
-        :space-evenly false
-        (box :class "apps-box"
-            :space-evenly false
-            (label :class "apps-nested-label"
-                :text "")
-            (input :class "input"
-                :hexpand true
-                :onchange `$HOME/.scripts/apps update "{}" &`
-                :onaccept `$HOME/.scripts/apps run "${apps[0].path}" &`))
-        (revealer :transition "slidedown"
-            :reveal apps-opened
-            (scroll :class "scroll"
-                :height 500
-                :vscroll true
-                (box :orientation "v"
-                    :space-evenly false
-                    (for app in apps
-                        (box :space-evenly false
-                            (image :class "image"
-                                :path {app.icon}
-                                :image-width 30
-                                :image-height 30)
-                            (button :class "apps-nested-button"
-                                :onclick `$HOME/.scripts/apps run "${app.path}" &`
-                                {app.name}))))))))
-
-
 (defwidget wlan []
     (eventbox :onhover `eww update wlan-hovered=true`
         :onhoverlost `eww update wlan-hovered=false`
         :tooltip wlan-network
-        (box :class "apps-box"
+        (box :class "bar-box"
             :space-evenly false
-            (button :class "apps-nested-button"
+            (button :class "bar-nested-button"
                 :hexpand true
                 :onclick `$HOME/.scripts/wlan toggle`
                 wlan-status)
             (revealer :transition "slideright"
                 :reveal wlan-hovered
-                (button :class "apps-nested-button"
+                (button :class "bar-nested-button"
                     :hexpand true
-                    :onclick `$HOME/.scripts/apps toggle & iwgtk &`
+                    :onclick `$HOME/.scripts/bar toggle & iwgtk &`
                     "")))))
 
 
 (defwidget bluetooth []
     (eventbox :onhover `eww update bluetooth-hovered=true`
         :onhoverlost `eww update bluetooth-hovered=false`
-        (box :class "apps-box"
+        (box :class "bar-box"
             :space-evenly false
-            (button :class "apps-nested-button"
+            (button :class "bar-nested-button"
                 :hexpand true
                 :onclick `$HOME/.scripts/bluetooth toggle`
                 bluetooth-status)
             (revealer :transition "slideright"
                 :reveal bluetooth-hovered
-                (button :class "apps-nested-button"
-                    :onclick `$HOME/.scripts/apps toggle & blueman-manager &`
+                (button :class "bar-nested-button"
+                    :onclick `$HOME/.scripts/bar toggle & blueman-manager &`
                     "")))))
 
 
@@ -242,20 +197,20 @@
     (eventbox :onhover `eww update vpn-hovered=true`
         :onhoverlost `eww update vpn-hovered=false`
         :visible "${hostname == "notebook"}"
-        (button :class "apps-button"
+        (button :class "bar-button"
             :onclick `$HOME/.scripts/vpn toggle`
             :tooltip vpn-endpoint
             vpn-status)))
 
 
 (defwidget microphone []
-    (button :class "apps-button"
+    (button :class "bar-button"
         :onclick `pamixer --default-source -t`
         microphone-status))
 
 
 (defwidget webcam []
-    (button :class "apps-button"
+    (button :class "bar-button"
         :onclick `$HOME/.scripts/webcam toggle`
         webcam-status))
 
