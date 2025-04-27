@@ -9,6 +9,7 @@ qt6-wayland
 
 # Terminal
 fzf
+less
 neovim
 ripgrep
 tmux

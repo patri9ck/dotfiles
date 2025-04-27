@@ -1,6 +1,6 @@
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 
-export PATH="$PATH:$GEM_HOME/bin:$HOME/Android/Sdk/platform-tools"
+export PATH="$PATH:$GEM_HOME/bin:$HOME/Android/Sdk/platform-tools:$HOME/Development/flutter/bin"
 
 export EDITOR=nvim
 
