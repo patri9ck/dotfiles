@@ -1,7 +1,6 @@
 require("options")
 require("plugins")
 
-add("rose-pine")
 add("fugitive")
 add("telescope")
 add("treesitter")
