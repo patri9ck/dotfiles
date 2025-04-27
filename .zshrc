@@ -1,4 +1,3 @@
-alias ssh='kitty +kitten ssh'
 alias fix-packages='paru -Qqn | paru -S -'
 alias create-srcinfo='makepkg --printsrcinfo > .SRCINFO'
 alias vim='nvim'
