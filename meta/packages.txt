@@ -15,6 +15,7 @@ neovim
 ripgrep
 tmux
 tmux-plugin-manager
+wl-clipboard
 zoxide
 zsh
 zsh-completions
