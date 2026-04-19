@@ -5,4 +5,4 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/scp %u@raspberrypi:%h/db.sqlite3 %h/.db.sqlite3
+ExecStart=/bin/scp %u@raspberrypi:%h/vaultwarden.sqlite3 %h/.vaultwarden.sqlite3
