@@ -1,0 +1,8 @@
+[Unit]
+Description=Raspberry Pi Backup
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/scp %u@raspberrypi:%h/db.sqlite3 %h/.db.sqlite3

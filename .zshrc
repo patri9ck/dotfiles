@@ -1,4 +1,4 @@
-alias fix-packages='paru -Qqn | paru -S -'
+alias fix-packages='yay -Qqn | yay -S -'
 alias create-srcinfo='makepkg --printsrcinfo > .SRCINFO'
 alias vim='nvim'
 alias moro='ssh moro-6-ws26@141.37.29.166'
@@ -7,6 +7,8 @@ autoload -Uz compinit
 autoload -Uz vcs_info
 
 bindkey -e
+
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 
 precmd() {
     vcs_info

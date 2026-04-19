@@ -45,7 +45,8 @@ ttf-linux-libertine-g
 # Applications
 bitwarden
 discord
-google-chrome
+firefox
+thunderbird
 libreoffice-fresh
 spotify
 xournalpp
