@@ -298,7 +298,7 @@
                             :max 100
                             :onchange `pamixer --set-volume "{}"`))
                     (button :class "bar-nested-button"
-                        :onclick `$HOME/.scripts/open pavucontrol &`
+                        :onclick `pavucontrol &`
                         ""))))))
 
 
