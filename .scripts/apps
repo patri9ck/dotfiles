@@ -77,7 +77,6 @@ def get_entries(query):
 
     append(entries, query, Path(Path.home(), ".local/share/applications"))
     append(entries, query, Path("/usr/share/applications"))
-    print(entries)
     
     return entries
 
@@ -106,14 +105,13 @@ if __name__ == "__main__":
 
     match sys.argv[1]:
         case "toggle":
-            if subprocess.Popen(["grep", "apps: apps"], stdin=subprocess.Popen(["eww", "active-windows"], stdout=subprocess.PIPE).stdout).wait() == 0: 
+            if subprocess.run(["grep", "apps: apps"], input=subprocess.run(["eww", "active-windows"], stdout=subprocess.PIPE, text=True).stdout, stdout=subprocess.PIPE, text=True).returncode == 0: 
                 close()
             else:
                 update("")
-
                 reset()
-                
-                subprocess.run(["eww", "open", "apps"])
+
+                subprocess.run(["eww", "open", "--screen", subprocess.run(["jq", "-r", ".[] | select(.focused == true) | .model"], input=subprocess.run(["hyprctl", "monitors", "-j"], stdout=subprocess.PIPE, text=True).stdout, stdout=subprocess.PIPE, text=True).stdout.strip(), "apps"])
                 subprocess.run(["eww", "update", "apps-opened=true"])
         case "update":
             update("" if length < 3 else sys.argv[2])
