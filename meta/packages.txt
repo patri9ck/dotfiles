@@ -23,6 +23,7 @@ zsh-syntax-highlighting
 
 # Programming
 claude-code
+firebase-tools
 jdk-openjdk
 jetbrains-toolbox
 maven
