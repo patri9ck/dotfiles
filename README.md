@@ -21,12 +21,8 @@ $ ~/.dotfiles/meta/install.sh packages notebook
 
 See [`packages.txt`](meta/packages.txt), [`packages-desktop.txt`](meta/packages-desktop.txt) and [`packages-notebook.txt`](meta/packages-notebook.txt) for a list of all packages which will be installed.
 
-Do not forget to install packages for [graphic card drivers](https://wiki.archlinux.org/title/xorg#Driver_installation) and [video acceleration](https://wiki.archlinux.org/title/Hardware_video_acceleration#Installation).
+Do not forget to install packages for [video acceleration](https://wiki.archlinux.org/title/Hardware_video_acceleration#Installation).
 
-For `.desktop` files to be able to use the terminal, run:
-```
-# ln -s /usr/bin/kitty /usr/bin/xdg-terminal-exec
-```
 ## Installing Dotfiles
 Dotfiles can be installed by running:
 ```
