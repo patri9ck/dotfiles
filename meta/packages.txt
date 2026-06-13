@@ -27,6 +27,7 @@ jetbrains-toolbox
 maven
 nodejs
 ruby
+claude-code
 
 # Fonts
 adobe-source-code-pro-fonts

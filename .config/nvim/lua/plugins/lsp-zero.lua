@@ -8,8 +8,6 @@ return {
         "L3MON4D3/LuaSnip",
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        "zbirenbaum/copilot.lua",
-        "zbirenbaum/copilot-cmp"
     },
     config = function()
         local lsp_zero = require("lsp-zero")
@@ -32,18 +30,10 @@ return {
             handlers = { lsp_zero.default_setup }
         })
 
-        require("copilot").setup({
-            suggestion = { enabled = false },
-            panel = { enabled = false }
-        })
-
-        require("copilot_cmp").setup()
-
         local cmp = require("cmp")
 
         cmp.setup({
             sources = {
-                { name = "copilot" },
                 { name = "nvim_lsp" }
             },
 

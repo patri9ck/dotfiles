@@ -12,6 +12,8 @@ export SAVEHIST=99
 export HISTSIZE=99
 export HISTFILE="$HOME/.history"
 
+export KERAS_BACKEND="torch"
+
 export QT_QPA_PLATFORM="wayland;xcb"
 export ELECTRON_OZONE_PLATFORM_HINT=wayland
 export _JAVA_AWT_WM_NONREPARENTING=1
