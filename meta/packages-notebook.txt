@@ -1,4 +1,3 @@
 light
 wireguard-tools
-arandr
 sof-firmware
