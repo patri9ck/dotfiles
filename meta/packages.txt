@@ -1,5 +1,6 @@
 # Desktop Environment
 bluez
+evolution
 gnome
 gnome-tweaks
 networkmanager
@@ -25,10 +26,6 @@ jetbrains-toolbox
 maven
 nodejs
 ruby
-
-# File Manager
-fuse2
-rclone
 
 # Fonts
 adobe-source-code-pro-fonts
