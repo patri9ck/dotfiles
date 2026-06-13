@@ -1,3 +1,2 @@
-light
-wireguard-tools
 sof-firmware
+tlp
