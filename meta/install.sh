@@ -3,17 +3,17 @@
 main_directory="$(dirname "$(dirname "$(readlink -f "$0")")")"
 
 packages() {
-	git clone https://aur.archlinux.org/paru-bin.git
+	git clone https://aur.archlinux.org/yay-bin.git
 	
-	cd paru-bin
+	cd yay-bin
 
 	makepkg -sirc --needed	
 	
 	cd -
 
-	rm -rf paru-bin
+	rm -rf yay-bin
 
-	paru -S --needed $(grep -h -v '^#' "$main_directory/meta/packages.txt" "$main_directory/meta/packages-$1.txt")
+	yay -S --needed $(grep -h -v '^#' "$main_directory/meta/packages.txt" "$main_directory/meta/packages-$1.txt")
 }
 
 dotfiles() {
