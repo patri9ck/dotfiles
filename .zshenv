@@ -4,6 +4,8 @@ export PATH="$PATH:$GEM_HOME/bin:$HOME/Android/Sdk/platform-tools:$HOME/Developm
 export MANPATH="$MANPATH:/usr/local/texlive/2025/texmf-dist/doc/man"
 export INFOPATH="$INFOPATH:/usr/local/texlive/2025/texmf-dist/doc/info"
 
+export ANV_DEBUG=video-decode,video-encode
+
 export EDITOR=nvim
 
 export SAVEHIST=99
