@@ -1,8 +1,8 @@
 #!/bin/sh
 
-playerctl -p "$PLAYER" -F metadata -f '{{artist}} - {{title}}' | while read -r line
+playerctl -p "$PLAYER" -F metadata -f '{{artist}} - {{title}}' | while read -r music
 do
-    if [ "$line" = '' ]
+    if [ "$music" = '' ]
     then
         eww update player-opened=false
     else
@@ -10,10 +10,10 @@ do
         then
             sleep 1
 
-            line="$(playerctl -p "$PLAYER" metadata -f '{{artist}} - {{title}}')"
+            music="$(playerctl -p "$PLAYER" metadata -f '{{artist}} - {{title}}')"
         fi
 
         eww update player-opened=true
-        eww update "player-music=$line"
+        eww update "player-music=$music"
     fi
 done
