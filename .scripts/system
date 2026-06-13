@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -z "$1" ]
+then
+    exit 1
+fi
+
+if [ -f '/var/lib/pacman/db.lck' ]
+then
+    notify-send 'Pacman Running'
+else
+    eval "$1"
+fi

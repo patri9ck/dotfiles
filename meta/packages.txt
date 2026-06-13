@@ -1,36 +1,50 @@
 # Desktop Environment
 blueman
 bluez-utils
-eww-wayland
+dunst
+eww
+fzf
 gnome-keyring
 grim
 hyprland
+hyprlock
+hypridle
 hyprpaper
+inetutils
 iwd
 iwgtk
 jq
-kitty
-mako
+openssh
 pamixer
 pavucontrol
 pipewire-pulse
 playerctl
-python-gobject
+python-pyqt5
 qt5-wayland
 qt6-wayland
-qt6ct
 slurp
-socat
+slocat
+systemd-resolvconf
 wl-clipboard
 wmname
 xdg-desktop-portal-hyprland
 xmlstarlet
+
+# Terminal
+kitty
+neovim
+ripgrep
+tmux
+tmux-plugin-manager
+zoxide
 zsh
 zsh-completions
 zsh-syntax-highlighting
 
 # Programming
 jdk-openjdk
+jetbrains-toolbox
+maven
 
 # File Manager
 fuse2
@@ -40,6 +54,7 @@ rclone
 ristretto
 thunar
 thunar-archive-plugin
+unzip
 xarchiver
 
 # Fonts
@@ -52,33 +67,30 @@ ttf-caladea
 ttf-carlito
 ttf-dejavu
 ttf-gentium-basic
+ttf-hack-nerd
 ttf-liberation
 ttf-linux-libertine-g
 ttf-material-icons-git
 
 # Themes
 capitaine-cursors
-arc-gtk-theme
-arc-icon-theme
-
-# Command Line Tools
-a2ln
-cups
-hplip
-htop
-neovim
+rose-pine-gtk-theme
 
 # Applications
 bitwarden
 discord
 galculator
 google-chrome
-jetbrains-toolbox
 libreoffice-fresh
 ristretto
 spotify
 xournalpp
 
-# Hardware
-openrazer-daemon
-polychromatic
+# Other
+a2ln
+cups
+hplip
+htop
+nodejs
+simple-scan
+vlc

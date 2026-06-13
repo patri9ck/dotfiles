@@ -1,57 +1,57 @@
 #!/bin/sh
 
 get_device() {
-	for device in $(find /sys/bus/usb/devices -maxdepth 1)
-	do
-		product="$device/product"
-				
-		if [ -f "$product" ] && [ "$(cat "$product")" = "$WEBCAM" ]
-		then
-			basename "$device"
-		fi
-	done
+    for device in $(find /sys/bus/usb/devices -maxdepth 1)
+    do
+        product="$device/product"
+                
+        if [ -f "$product" ] && [ "$(cat "$product")" = "$WEBCAM" ]
+        then
+            basename "$device"
+        fi
+    done
 }
 
 device="$(get_device)"
 
 if [ -z "$device" ]
 then
-	exit 1
+    exit 1
 fi
 
 is_enabled() {
-	if ! [ -d "/sys/bus/usb/drivers/usb/$device" ]
-	then
-		return 1
-	fi
+    if ! [ -d "/sys/bus/usb/drivers/usb/$device" ]
+    then
+        return 1
+    fi
 }
 
 status() {
-	if is_enabled
-	then
-		echo enabled
-	else
-		echo disabled
-	fi
+    if is_enabled
+    then
+        echo enabled
+    else
+        echo disabled
+    fi
 }
 
 toggle() {
-	if is_enabled
-	then
-		echo "$device" | sudo tee "/sys/bus/usb/drivers/usb/unbind"
-	else
-		echo "$device" | sudo tee "/sys/bus/usb/drivers/usb/bind"
-	fi
+    if is_enabled
+    then
+        echo "$device" | sudo tee "/sys/bus/usb/drivers/usb/unbind"
+    else
+        echo "$device" | sudo tee "/sys/bus/usb/drivers/usb/bind"
+    fi
 }
 
 case "$1" in
-	status)
-		status
-		;;
-	toggle)
-		toggle
-		;;
-	*)
-		exit 1
-		;;
+    status)
+        status
+        ;;
+    toggle)
+        toggle
+        ;;
+    *)
+        exit 1
+        ;;
 esac

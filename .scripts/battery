@@ -4,78 +4,78 @@ battery="$(find /sys/class/power_supply -regex '/sys/class/power_supply/BAT[0-9]
 
 if [ -z "$battery" ]
 then
-	exit 1
+    exit 1
 fi
 
 status() {
-	cat "$battery/status" | awk '{print tolower($0)}'
+    cat "$battery/status" | awk '{print tolower($0)}'
 }
 
 capacity() {
-	echo "$(cat "$battery/capacity")%"
+    echo "$(cat "$battery/capacity")%"
 }
 
-time() {
-	status="$(status)"
+remaining() {
+    status="$(status)"
 
-	if [ "$status" = charging ]
-	then
-		echo Charging...
-	elif [ "$status" = full ]
-	then
-		echo Full
-	else
-		energy="$(cat "$battery/energy_now")"
-		power="$(cat "$battery/power_now")"
+    if [ "$status" = charging ]
+    then
+        echo Charging...
+    elif [ "$status" = full ]
+    then
+        echo Full
+    else
+        energy="$(cat "$battery/energy_now")"
+        power="$(cat "$battery/power_now")"
 
-		hours=$(($energy / $power))
+        hours=$(($energy / $power))
 
-		echo | awk "{printf \"%d Hours %d Minutes Remaining\n\", $hours, ($energy / $power - $hours) * 60}"
-	fi
+        echo | awk "{printf \"%d Hours %d Minutes Remaining\n\", $hours, ($energy / $power - $hours) * 60}" 
+    fi
 }
 
 notify() {
-	cache="$(mktemp)"
+    cache="$(mktemp)"
 
-	while true
-	do
-		if [ "$(status)" = discharging ]
-		then
-			capacity="$(capacity)"
+    while true
+    do
+        if [ "$(status)" = discharging ]
+        then
+            capacity="$(capacity)"
 
-			case "$capacity" in
-				20%|15%|10%|5%)
-					if ! grep -q -x "$capacity" "$cache"
-					then
-						notify-send "Battery at $capacity"
+            case "$capacity" in
+                20%|15%|10%|5%)
+                    if ! grep -q -x "$capacity" "$cache"
+                    then
+                        notify-send "Battery at $capacity"
 
-						echo "$capacity" > "$cache"
-					fi
+                        echo "$capacity" > "$cache"
+                    fi
 
-					;;
-			esac
-		else
-			echo > "$cache"
-		fi
+                    ;;
+            esac
+        else
+            echo > "$cache"
+        fi
 
-		sleep 1
-	done
+        sleep 60
+    done
 }
 
 case "$1" in
-	status)
-		status
-		;;
-	capacity)
-		capacity
-		;;
-	time)
-		time
-		;;
-	notify)
-		notify
-		;;
-	*)
-		exit 1
-		;;
-esac	
+    status)
+        status
+        ;;
+    capacity)
+        capacity
+        ;;
+    remaining)
+        remaining
+        ;;
+    notify)
+        notify
+        ;;
+    *)
+        exit 1
+        ;;
+esac

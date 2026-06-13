@@ -1,3 +1,4 @@
 light
 wireguard-tools
-tlp
+arandr
+sof-firmware
