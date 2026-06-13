@@ -22,12 +22,13 @@ zsh-completions
 zsh-syntax-highlighting
 
 # Programming
+claude-code
 jdk-openjdk
 jetbrains-toolbox
 maven
 nodejs
 ruby
-claude-code
+zed
 
 # Fonts
 adobe-source-code-pro-fonts
