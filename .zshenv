@@ -1,6 +1,6 @@
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 
-export PATH="$PATH:$GEM_HOME/bin:$HOME/Android/Sdk/platform-tools:$HOME/Development/flutter/bin:/usr/local/texlive/2025/bin/x86_64-linux"
+export PATH="$PATH:$GEM_HOME/bin:$HOME/Android/Sdk/platform-tools:$HOME/Development/flutter/bin:/usr/local/texlive/2025/bin/x86_64-linux:$HOME/.pub-cache/bin"
 export MANPATH="$MANPATH:/usr/local/texlive/2025/texmf-dist/doc/man"
 export INFOPATH="$INFOPATH:/usr/local/texlive/2025/texmf-dist/doc/info"
 
