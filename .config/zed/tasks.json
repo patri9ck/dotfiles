@@ -1,0 +1,9 @@
+[
+  {
+    "label": "Build LaTeX",
+    "command": "latexmk",
+    "args": ["-pdf", "main.tex"],
+    "use_new_terminal": false,
+    "reveal": "always"
+  }
+]
