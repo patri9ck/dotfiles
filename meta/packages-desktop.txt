@@ -1,3 +1,4 @@
+ollama-vulkan
 openrazer-daemon
 polychromatic
 steam
