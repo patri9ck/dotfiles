@@ -27,7 +27,6 @@ jdk-openjdk
 jetbrains-toolbox
 maven
 nodejs
-opencode
 uv
 ruby
 zed

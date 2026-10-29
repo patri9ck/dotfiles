@@ -1,4 +1,5 @@
 ollama-vulkan
+opencode
 openrazer-daemon
 polychromatic
 steam
